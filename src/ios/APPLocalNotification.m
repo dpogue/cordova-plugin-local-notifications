@@ -242,6 +242,7 @@
  */
 - (void) promptForPermission:(CDVInvokedUrlCommand *)command
 {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
     if (IsAtLeastiOSVersion(@"8.0")) {
         UIUserNotificationType types;
         UIUserNotificationSettings *settings;
@@ -256,6 +257,7 @@
              registerUserNotificationSettings:settings];
         }];
     }
+#endif
 }
 
 /**
@@ -263,6 +265,7 @@
  */
 - (BOOL) hasPermissionToSheduleNotifications
 {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
     if (IsAtLeastiOSVersion(@"8.0")) {
         UIUserNotificationType types;
         UIUserNotificationSettings *settings;
@@ -273,7 +276,10 @@
         types = UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound;
 
         return (settings.types & types);
-    } else {
+    }
+    else
+#endif
+    {
         return YES;
     }
 }
