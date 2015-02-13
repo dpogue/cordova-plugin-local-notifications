@@ -445,12 +445,10 @@
 
     if (![self stringIsNullOrEmpty:msg])
     {
-        if (![self stringIsNullOrEmpty:title]) {
-            notification.alertBody = [NSString stringWithFormat:
-                                      @"%@\n%@", title, msg];
-        } else {
-            notification.alertBody = msg;
-        }
+        // Because we set the title to the app name for Android, we end up
+        // with it getting duplicated on iOS, so we always ignore the title
+        // on iOS now :(
+        notification.alertBody = msg;
     }
 
     if (sound != (NSString*)[NSNull null])
